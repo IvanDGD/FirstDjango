@@ -8,21 +8,6 @@ def multiplication_table(request):
     <head>
         <meta charset="UTF-8">
         <title>Таблиця множення</title>
-        <style>
-            table {
-                border-collapse: collapse;
-                margin: 20px auto;
-                font-family: Arial;
-            }
-            td, th {
-                border: 1px solid #333;
-                padding: 8px 12px;
-                text-align: center;
-            }
-            th {
-                background: #f2f2f2;
-            }
-        </style>
     </head>
     <body>
         <h2 style="text-align:center;">Таблиця множення</h2>
