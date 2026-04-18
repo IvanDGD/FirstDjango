@@ -1,3 +1,5 @@
+from contextlib import nullcontext
+
 from django.http import HttpResponse
 
 def index(request):
@@ -9,6 +11,7 @@ def index(request):
         <li><a href="/app/management/">Керівництво</a></li>
         <li><a href="/app/about/">Про компанію</a></li>
         <li><a href="/app/contacts/">Контакти</a></li>
+        <li><a href="/app/branches/">Філії</a></li>
     </ul>
     """)
 
@@ -24,6 +27,7 @@ def news(request):
         <li><a href="/app/management/">Керівництво</a></li>
         <li><a href="/app/about/">Про компанію</a></li>
         <li><a href="/app/contacts/">Контакти</a></li>
+        <li><a href="/app/branches/">Філії</a></li>
     </ul>
     """)
 
@@ -40,6 +44,7 @@ def management(request):
         <li><a href="/app/news/">Новини</a></li>
         <li><a href="/app/about/">Про компанію</a></li>
         <li><a href="/app/contacts/">Контакти</a></li>
+        <li><a href="/app/branches/">Філії</a></li>
     </ul>
     """)
 
@@ -60,6 +65,7 @@ def about(request):
         <li><a href="/app/news/">Новини</a></li>
         <li><a href="/app/management/">Керівництво</a></li>
         <li><a href="/app/contacts/">Контакти</a></li>
+        <li><a href="/app/branches/">Філії</a></li>
     </ul>
     """)
 
@@ -75,5 +81,40 @@ def contacts(request):
         <li><a href="/app/news/">Новини</a></li>
         <li><a href="/app/management/">Керівництво</a></li>
         <li><a href="/app/about/">Про компанію</a></li>
+        <li><a href="/app/branches/">Філії</a></li>
     </ul>
+    """)
+
+
+affiliates = {
+    "Kyiv": "Головна філія компанії, адміністративний та координаційний центр.",
+    "Odesa": "Регіональна філія, що відповідає за південний напрямок та клієнтську підтримку.",
+    "Lviv": "Філія на заході України, що займається розвитком партнерських відносин та продажами.",
+    "Dnipro": "Центральна регіональна філія, яка відповідає за технічну підтримку та операційні процеси."
+}
+
+def branches(request):
+    content = "<h1>Філії</h1><ul>"
+
+    for name in affiliates:
+        content += f'<li><a href="/app/branches/{name}/">{name}</a></li>'
+
+    content += "</ul>"
+    content += """
+    <ul>
+        <li><a href="/app/">Головна</a></li>
+        <li><a href="/app/news/">Новини</a></li>
+        <li><a href="/app/management/">Керівництво</a></li>
+        <li><a href="/app/about/">Про компанію</a></li>
+    </ul>
+    """
+    return HttpResponse(content)
+
+def branch_detail(request, city):
+    info = affiliates.get(city)
+
+    return HttpResponse(f"""
+        <h1>Філія: {city}</h1>
+        <p>{info}</p>
+        <a href="/app/branches/">Назад</a>
     """)
